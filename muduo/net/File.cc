@@ -82,6 +82,13 @@ void File::handleRead()
     else if (n == 0)
     {
         LOG_INFO << "EOF reached.";
+        // EOF 时触发用户回调，即使没有数据，也要通知上层退出 loop
+        if (readCallback_)
+        {
+            readCallback_(std::string());
+        }
+        // 取消读监听，关闭 fd
+        channel_.disableReading();
         ::close(channel_.fd());
     }
     else

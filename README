@@ -1,3 +1,48 @@
+## 使用方式
+
+下载仓库代码到本地
+```shell
+git clone https://github.com/Blizzard-cyber/muduo_iouring.git
+```
+
+```shell
+cd muduo_iouring/
+```
+运行构建脚本得到muduo静态库文件
+
+```shell
+./build.sh 
+```
+
+将头文件和静态库打包并拷贝到test目录下
+```shell
+./build.sh install
+```
+
+进入build
+```shell
+cd test && mkdir build && cd build 
+```
+
+Note：前提GTest库已经安装到/usr/local/lib\
+
+编译测试用例
+```shell
+cmake .. && make 
+```
+运行测试用例
+```shell
+./FileTest 
+```
+
+<br/>
+
+---
+
+<br/>
+
+
+
 Muduo is a multithreaded C++ network library based on
 the reactor pattern.
 
