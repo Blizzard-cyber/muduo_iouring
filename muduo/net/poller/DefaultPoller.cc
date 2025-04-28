@@ -9,6 +9,7 @@
 #include "muduo/net/Poller.h"
 #include "muduo/net/poller/PollPoller.h"
 #include "muduo/net/poller/EPollPoller.h"
+#include "muduo/net/poller/iouringPoller.h"
 
 #include <stdlib.h>
 
@@ -20,8 +21,18 @@ Poller* Poller::newDefaultPoller(EventLoop* loop)
   {
     return new PollPoller(loop);
   }
-  else
+
+  else if (::getenv("MUDUO_USE_EPOLL"))
   {
     return new EPollPoller(loop);
   }
+
+  // 这个函数在Poller.h中声明
+  // 原本代码通过获取环境变量的值来判断使用poll还是epoll
+  // 因为一般不会设置MUDUO_USE_POLL环境变量，因此默认使用EPOLL作为IO复用
+  // 现在默认使用IOURING作为IO复用
+  else{
+    return new IoUringPoller(loop);
+  }
+  
 }

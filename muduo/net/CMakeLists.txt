@@ -13,11 +13,13 @@ set(net_SRCS
   EventLoop.cc
   EventLoopThread.cc
   EventLoopThreadPool.cc
+  File.cc   # 添加File I/O支持
   InetAddress.cc
   Poller.cc
   poller/DefaultPoller.cc
   poller/EPollPoller.cc
   poller/PollPoller.cc
+  poller/iouringPoller.cc  # 添加io_uring支持
   Socket.cc
   SocketsOps.cc
   TcpClient.cc
@@ -28,7 +30,7 @@ set(net_SRCS
   )
 
 add_library(muduo_net ${net_SRCS})
-target_link_libraries(muduo_net muduo_base)
+target_link_libraries(muduo_net muduo_base uring)  # 加入liburing库
 
 #add_library(muduo_net_cpp11 ${net_SRCS})
 #target_link_libraries(muduo_net_cpp11 muduo_base_cpp11)
@@ -45,6 +47,7 @@ set(HEADERS
   EventLoop.h
   EventLoopThread.h
   EventLoopThreadPool.h
+  File.h
   InetAddress.h
   TcpClient.h
   TcpConnection.h

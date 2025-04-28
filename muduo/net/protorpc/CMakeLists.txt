@@ -1,3 +1,5 @@
+find_package(Protobuf REQUIRED)
+include_directories(${PROTOBUF_INCLUDE_DIRS})
 add_custom_command(OUTPUT rpc.pb.cc rpc.pb.h
   COMMAND protoc
   ARGS --cpp_out . ${CMAKE_CURRENT_SOURCE_DIR}/rpc.proto -I${CMAKE_CURRENT_SOURCE_DIR}
@@ -8,6 +10,10 @@ set_source_files_properties(rpc.pb.cc PROPERTIES COMPILE_FLAGS "-Wno-conversion"
 include_directories(${PROJECT_BINARY_DIR})
 
 add_library(muduo_protorpc_wire rpc.pb.cc RpcCodec.cc)
+target_link_libraries(muduo_protorpc_wire
+  PUBLIC
+    ${PROTOBUF_LIBRARIES}
+)
 set_target_properties(muduo_protorpc_wire PROPERTIES COMPILE_FLAGS "-Wno-error=shadow")
 
 #add_library(muduo_protorpc_wire_cpp11 rpc.pb.cc RpcCodec.cc)

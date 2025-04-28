@@ -1,3 +1,6 @@
+find_package(Protobuf REQUIRED)
+link_libraries(${PROTOBUF_LIBRARIES} pthread)
+
 add_subdirectory(ace/ttcp)
 add_subdirectory(asio/chat)
 add_subdirectory(asio/tutorial)
