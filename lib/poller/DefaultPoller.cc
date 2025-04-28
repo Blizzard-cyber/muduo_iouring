@@ -32,7 +32,7 @@ Poller *Poller::newDefaultPoller(EventLoop *loop)
   // 因为一般不会设置MUDUO_USE_POLL环境变量，因此默认使用EPOLL作为IO复用
   // 现在默认使用IOURING作为IO复用
   // else
-  {
-    return new IoUringPoller(loop);
-  }
+  
+  return new IoUringPoller(loop);
+  
 }

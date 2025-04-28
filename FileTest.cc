@@ -14,7 +14,7 @@ protected:
 
   void SetUp() override {
     
-    char tmpl[] = "testfile.txt";
+    char tmpl[] = "/tmp/testfileXXXXXX";
     int fd = ::mkstemp(tmpl);
     ASSERT_GE(fd, 0);
     ::close(fd);

@@ -24,4 +24,5 @@ target_link_libraries(FileTest
     GTest::GTest
     GTest::Main
 )
+enable_testing()
 add_test(NAME FileTest COMMAND FileTest)
