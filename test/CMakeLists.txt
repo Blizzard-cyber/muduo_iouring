@@ -17,7 +17,7 @@ find_library(MUDUO_NET  muduo_net  PATHS ${CMAKE_SOURCE_DIR}/../build/lib NO_DEF
 
 
 
-add_executable(FileTest FileTest.cc)
+add_executable(FileTest FileTest.cc File.cc)
 target_link_libraries(FileTest
   muduo_net
   muduo_base
