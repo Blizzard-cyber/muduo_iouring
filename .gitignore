@@ -3,6 +3,6 @@ bazel-*
 compile_commands.json
 .vscode/
 build/
-/test/lib/*
-/test/include/*
+/test/lib/
+/test/include/
 /test/build/
