@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fcntl.h>
+#include <sys/stat.h> 
 #include <unistd.h>
 #include <string.h>
 
@@ -31,6 +32,16 @@ File::~File()
 void File::write(const std::string &data)
 {
     buffer_ = data;
+
+    // 对于普通文件描述符，epoll/io_uring 不会提供 EPOLLIN/EPOLLOUT 就绪事件
+    // 回调函数始终无法触发
+    // 如果是普通文件（regular file），直接同步写
+    struct stat st;
+    if (::fstat(channel_.fd(), &st) == 0 && S_ISREG(st.st_mode)) {
+        handleWrite();
+        return;
+    }
+    // 如果是管道（pipe）或套接字（socket），则使用异步写
     channel_.setWriteCallback(std::bind(&File::handleWrite, this));
     channel_.enableWriting(); // channel新增监听fd的write事件
 }
